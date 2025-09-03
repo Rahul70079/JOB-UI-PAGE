@@ -46,8 +46,7 @@ job-portal-ui/
 ## ▶️ How to Run
 1. Clone the repository  
    ```bash
-   git clone https://github.com/your-username/job-portal-ui.git
-
+  https://github.com/Rahul70079/JOB-UI-PAGE
 
 Open index.html in any browser.
 
