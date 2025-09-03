@@ -1,0 +1,140 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Portal UI</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+    body{background:#f8f9fa;color:#333}
+
+    /* Header */
+    header{
+      background:#fff;padding:15px 30px;
+      display:flex;justify-content:space-between;align-items:center;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);position:sticky;top:0;z-index:1000
+    }
+    .logo{font-size:24px;font-weight:bold;color:#0077ff}
+    .search input{
+      padding:8px 12px;width:300px;border:1px solid #ccc;border-radius:6px
+    }
+    .profile{font-size:16px;cursor:pointer}
+
+    /* Main Layout */
+    main{display:grid;grid-template-columns:250px 1fr;gap:20px;padding:20px}
+
+    /* Sidebar */
+    .sidebar{
+      background:#fff;padding:15px;border-radius:10px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1)
+    }
+    .sidebar h3{margin-bottom:10px}
+    .sidebar label{display:block;margin:8px 0;cursor:pointer}
+
+    /* Job Listings */
+    .jobs{
+      display:grid;grid-template-columns:1fr;gap:20px
+    }
+    .job-card{
+      background:#fff;padding:20px;border-radius:12px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.1);transition:.3s
+    }
+    .job-card:hover{transform:translateY(-3px)}
+    .job-card h4{font-size:18px;margin-bottom:5px}
+    .job-card p{margin:4px 0}
+    .salary{color:green;font-weight:bold}
+    .apply-btn{
+      margin-top:10px;background:#0077ff;color:#fff;border:none;
+      padding:8px 12px;border-radius:8px;cursor:pointer;transition:.3s
+    }
+    .apply-btn:hover{background:#005bb5}
+
+    /* Responsive */
+    @media(max-width:768px){
+      main{grid-template-columns:1fr}
+      .search input{width:180px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">JobPortal</div>
+    <div class="search"><input type="text" id="searchBox" placeholder="Search jobs..."></div>
+    <div class="profile">👤 Login</div>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h3>Filters</h3>
+      <label><input type="checkbox" value="Full-Time" class="filter"> Full-Time</label>
+      <label><input type="checkbox" value="Part-Time" class="filter"> Part-Time</label>
+      <label><input type="checkbox" value="Remote" class="filter"> Remote</label>
+      <label><input type="checkbox" value="Internship" class="filter"> Internship</label>
+    </aside>
+
+    <!-- Job Listings -->
+    <section class="jobs" id="jobList"></section>
+  </main>
+
+  <script>
+    const jobs = [
+      {id:1,title:"Frontend Developer",company:"Google",location:"Bangalore",salary:"₹12 LPA",type:"Full-Time"},
+      {id:2,title:"Backend Engineer",company:"Microsoft",location:"Hyderabad",salary:"₹15 LPA",type:"Full-Time"},
+      {id:3,title:"UI/UX Designer",company:"Adobe",location:"Remote",salary:"₹10 LPA",type:"Remote"},
+      {id:4,title:"Data Analyst Intern",company:"TCS",location:"Pune",salary:"₹25,000/month",type:"Internship"},
+      {id:5,title:"Customer Support",company:"Wipro",location:"Chennai",salary:"₹5 LPA",type:"Part-Time"},
+    ];
+
+    const jobList=document.getElementById("jobList");
+    const searchBox=document.getElementById("searchBox");
+    const filters=document.querySelectorAll(".filter");
+
+    // Render Jobs
+    function renderJobs(filterText=""){
+      jobList.innerHTML="";
+      const activeFilters=[...filters].filter(f=>f.checked).map(f=>f.value);
+
+      jobs
+        .filter(job=>{
+          const matchesSearch=job.title.toLowerCase().includes(filterText.toLowerCase());
+          const matchesFilter=activeFilters.length===0 || activeFilters.includes(job.type);
+          return matchesSearch && matchesFilter;
+        })
+        .forEach(job=>{
+          const card=document.createElement("div");
+          card.classList.add("job-card");
+          card.innerHTML=`
+            <h4>${job.title}</h4>
+            <p>Company: ${job.company}</p>
+            <p>Location: ${job.location}</p>
+            <p class="salary">Salary: ${job.salary}</p>
+            <p>Type: ${job.type}</p>
+            <button class="apply-btn" onclick="applyJob('${job.title}','${job.company}')">Apply</button>
+          `;
+          jobList.appendChild(card);
+        });
+    }
+
+    // Search functionality
+    searchBox.addEventListener("input",()=>renderJobs(searchBox.value));
+
+    // Filter functionality
+    filters.forEach(f=>f.addEventListener("change",()=>renderJobs(searchBox.value)));
+
+    // Apply Button
+    function applyJob(title,company){
+      alert(`✅ You have applied for ${title} at ${company}`);
+    }
+
+    // Initial load
+    renderJobs();
+  </script>
+
+</body>
+</html>

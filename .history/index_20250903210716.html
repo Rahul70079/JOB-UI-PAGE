@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Commerce Store</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f8f9fa;
+      color: #333;
+    }
+
+    /* Header */
+    header {
+      background: #fff;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    header .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #0077ff;
+    }
+    header .search input {
+      padding: 8px 12px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    header .cart {
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    /* Main Layout */
+    main {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .sidebar h3 {
+      margin-bottom: 10px;
+    }
+    .sidebar ul {
+      list-style: none;
+    }
+    .sidebar ul li {
+      padding: 8px 0;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    .sidebar ul li:hover {
+      color: #0077ff;
+    }
+
+    /* Products */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: #fff;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+    .product-card img {
+      max-width: 100%;
+      height: 180px;
+      object-fit: contain;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    .product-card h4 {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+    .product-card p {
+      color: #0077ff;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .product-card button {
+      background: #0077ff;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .product-card button:hover {
+      background: #005bb5;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">ShopEase</div>
+    <div class="search"><input type="text" placeholder="Search products..."></div>
+    <div class="cart">🛒 Cart (0)</div>
+  </header>
+
+  <!-- Main -->
+  <main>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h3>Categories</h3>
+      <ul>
+        <li>Electronics</li>
+        <li>Fashion</li>
+        <li>Home & Kitchen</li>
+        <li>Books</li>
+        <li>Sports</li>
+      </ul>
+    </aside>
+
+    <!-- Products -->
+    <section class="products" id="productList">
+      <!-- JS will load products here -->
+    </section>
+  </main>
+
+  <!-- JavaScript -->
+  <script>
+    const products = [
+      { id: 1, name: "Smartphone", price: 12000, img: "https://via.placeholder.com/200" },
+      { id: 2, name: "Headphones", price: 2500, img: "https://via.placeholder.com/200" },
+      { id: 3, name: "Laptop", price: 55000, img: "https://via.placeholder.com/200" },
+      { id: 4, name: "Shoes", price: 1800, img: "https://via.placeholder.com/200" },
+      { id: 5, name: "Wrist Watch", price: 3000, img: "https://via.placeholder.com/200" },
+    ];
+
+    const productList = document.getElementById("productList");
+
+    products.forEach(product => {
+      const card = document.createElement("div");
+      card.classList.add("product-card");
+      card.innerHTML = `
+        <img src="${product.img}" alt="${product.name}">
+        <h4>${product.name}</h4>
+        <p>₹${product.price}</p>
+        <button>Add to Cart</button>
+      `;
+      productList.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>
